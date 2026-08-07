@@ -17,7 +17,7 @@ A dynamic, interactive credit card payment form featuring a smooth 3D flip anima
 
 ## Credit Card Preview
 
-<img width="800" alt="Neon Maze Quest Gameplay" src="https://github.com/user-attachments/assets/2f5093da-b282-437a-beed-7f2d163b3e9d" />
+<img width="1402" height="1122" alt="Image" src="https://github.com/user-attachments/assets/2eebcdbf-d852-4af9-9af0-2aff253f4ea2" />
 
 ### 🌐 Live Demo
 
