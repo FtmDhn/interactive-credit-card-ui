@@ -21,7 +21,7 @@ A dynamic, interactive credit card payment form featuring a smooth 3D flip anima
 
 ### 🌐 Live Demo
 
-👉 **[Click here to view the project online](https://neon-maze-game-git-main-ftmdhns-projects.vercel.app/)**
+👉 **[Click here to view the project online](https://ftmdhn.github.io/interactive-credit-card-ui/)**
 
 <br>
 
