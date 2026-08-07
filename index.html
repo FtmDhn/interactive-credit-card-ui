@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Only for dynamic classes toggled by JS */
+        .turnBack {
+            transform: rotateY(180deg) translateY(-90px) translateX(50px) !important;
+            transition: .5s !important;
+        }
+    </style>
+</head>
+
+<body class="h-screen m-0 p-0 overflow-hidden flex justify-center items-center font-sans bg-[#f8eeee] p-5 box-border">
+
+    <main class="container relative w-[900px] h-screen flex justify-center items-center [perspective:1200px]">
+
+        <!-- Back Card & Preview Card -->
+        <div class="card-bg relative w-[360px] h-[240px] border border-black/5 rounded-3xl bg-white bg-center bg-cover [transform:translateY(-90px)_translateX(-50px)] shadow-[0_15px_40px_rgba(80,50,50,0.05)] [transform-style:preserve-3d] transition-transform duration-[600ms] ease-in-out after:content-[''] after:absolute after:inset-0 after:bg-[rgba(6,2,29,0.45)] after:rounded-3xl">
+            
+            <div class="preview-card relative w-full max-w-[430px] aspect-[1.586/1] rounded-3xl p-6 box-border text-white flex flex-col justify-between absolute top-0 left-0 h-full overflow-hidden [backface-visibility:hidden] z-10 shadow-[0_15px_30px_rgba(0,0,0,0.2),0_6px_10px_rgba(0,0,0,0.15)]
+            before:content-[''] before:absolute before:top-[-50%] before:left-[-20%] before:w-[150%] before:h-[150%] before:bg-[radial-gradient(circle,rgba(255,255,255,0.15)_0%,rgba(255,255,255,0)_60%)] before:rotate-[20deg] before:pointer-events-none">
+                
+                <div class="card-header flex justify-between items-start z-10 relative">
+                    <img src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/chip.png" class="chip-img w-[50px] h-auto rounded-md" alt="chip">
+                    <img src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/visa.png" class="visa-img w-[70px] h-auto object-contain" alt="visa">
+                </div>
+
+                <div data-status="cardNum" id="card-num-display" class="card-number  relative text-xl font-medium tracking-[3px] my-2.5 [text-shadow:0_2px_4px_rgba(0,0,0,0.2)] z-10 [word-spacing:5px] text-center py-3">
+                    <span class="focus absolute z-30 rounded-[5px] left-1/2 top-0 w-[110%] h-full opacity-0 pointer-events-none overflow-hidden border-2 border-white/65 [transform:translateX(-50%)] [transition:all_0.35s_cubic-bezier(0.71,0.03,0.56,0.85)]"></span>
+                    <span>####</span>
+                    <span>####</span>
+                    <span>####</span>
+                    <span>####</span>
+                </div>
+
+                <div class="card-footer flex justify-between items-end z-10 relative">
+                    <div class="holder-section relative w-[65%]">
+                        <p class="label text-[0.6rem] uppercase tracking-wider opacity-80 m-0 mb-[5px]">Card Holder</p>
+                        <span class="focus absolute z-30 rounded-[5px] top-[-8px] left-[-20px] w-[120%] h-[60px] opacity-0 pointer-events-none overflow-hidden border-2 border-white/65 [transform:translateX(0)] [transition:all_0.35s_cubic-bezier(0.71,0.03,0.56,0.85)]"></span>
+                        <p id="card-name-display" class="value truncate text-base uppercase font-semibold tracking-wider m-0">FULL NAME</p>
+                    </div>
+                    <div class="expiry-section relative w-[35%] text-right">
+                        <p class="label text-[0.6rem] uppercase tracking-wider opacity-80 m-0 mb-[5px]">Expires</p>
+                        <span class="focus absolute z-30 rounded-[5px] left-1/2 top-0 w-full !h-[130%] opacity-0 pointer-events-none overflow-hidden border-2 border-white/65 [transform:translateX(-30%)_translateY(-6px)] [transition:all_0.35s_cubic-bezier(0.71,0.03,0.56,0.85)]"></span>
+                        <p id="card-expiry-display" class="value text-base uppercase font-semibold tracking-wider m-0">MM/YY</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Back Card -->
+            <div class="back-card absolute top-0 left-0 w-full h-full rounded-[20px] p-6 box-border text-white flex flex-col items-center overflow-hidden [backface-visibility:hidden] [transform:rotateY(180deg)] z-10">
+                <div class="magnetic-strip w-[calc(100%+50px)] h-[45px] bg-black mt-5"></div>
+                <div class="cvv-section w-full flex items-center mt-6 justify-end">
+                    <div class="cvv-label text-base mr-2.5 uppercase opacity-80">CVV2</div>
+                    <div class="cvv-line w-[70%] h-[35px] rounded flex items-center justify-end pr-2.5 [background:repeating-linear-gradient(45deg,#f0f0f0,#f0f0f0_5px,#fff_5px,#fff_10px)]">
+                        <span class="bg-white w-[50px] h-[25px] flex items-center justify-center border border-[#ccc] rounded-[3px] font-mono text-[#333] text-base tracking-[2px]"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Form -->
+        <div class="payment-card relative w-[460px] p-10 bg-white/95 rounded-3xl shadow-[0_20px_50px_rgba(80,50,50,0.08)] z-20">
+
+            <div class="form-group mb-5">
+                <label class="block mb-2 text-sm text-[#554b4b] font-medium">Card Number</label>
+                <div class="input-box w-full h-[50px] flex items-center px-4 border border-[#e0dada] rounded-[10px] bg-white text-[#777] transition duration-200 focus-within:border-[#c9899d] focus-within:shadow-[0_0_0_3px_rgba(201,137,157,0.1)]">
+                    <span class="card-icon mr-2.5 text-[18px] text-[#aaa] flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M3.00488 2.99979H21.0049C21.5572 2.99979 22.0049 3.4475 22.0049 3.99979V19.9998C22.0049 20.5521 21.5572 20.9998 21.0049 20.9998H3.00488C2.4526 20.9998 2.00488 20.5521 2.00488 19.9998V3.99979C2.00488 3.4475 2.4526 2.99979 3.00488 2.99979ZM20.0049 10.9998H4.00488V18.9998H20.0049V10.9998ZM20.0049 8.99979V4.99979H4.00488V8.99979H20.0049ZM14.0049 14.9998H18.0049V16.9998H14.0049V14.9998Z"></path>
+                        </svg>
+                    </span>
+                    <input class="cardNum w-10 border-none outline-none text-[15px] bg-transparent placeholder:text-[#b5adad]" type="text" placeholder="0000">
+                    <input class="cardNum w-10 border-none outline-none text-[15px] bg-transparent placeholder:text-[#b5adad]" type="text" placeholder="0000">
+                    <input class="cardNum w-10 border-none outline-none text-[15px] bg-transparent placeholder:text-[#b5adad]" type="text" placeholder="0000">
+                    <input class="cardNum w-10 border-none outline-none text-[15px] bg-transparent placeholder:text-[#b5adad]" type="text" placeholder="0000">
+                </div>
+            </div>
+
+            <div class="row flex gap-5">
+                <div class="form-group mb-5 flex-1">
+                    <label class="block mb-2 text-sm text-[#554b4b] font-medium">Card Holder</label>
+                    <input id="fullName" class="input-box w-full h-[50px] flex items-center px-4 border border-[#e0dada] rounded-[10px] bg-white text-[#777] transition duration-200 focus:border-[#c9899d] focus:shadow-[0_0_0_3px_rgba(201,137,157,0.1)] outline-none text-[15px] placeholder:text-[#b5adad]" type="text" placeholder="Full Name">
+                </div>
+
+                <div class="form-group small mb-5 max-w-[170px]">
+                    <label class="block mb-2 text-sm text-[#554b4b] font-medium">Expires</label>
+                    <input id="expire" class="w-full h-[50px] flex items-center px-4 border border-[#e0dada] rounded-[10px] bg-white text-[#777] transition duration-200 focus:border-[#c9899d] focus:shadow-[0_0_0_3px_rgba(201,137,157,0.1)] outline-none text-[15px] placeholder:text-[#b5adad]" type="text" placeholder="MM / YYYY">
+                </div>
+            </div>
+
+            <div class="row flex gap-5">
+                <div class="form-group mb-5 flex-1">
+                    <label class="block mb-2 text-sm text-[#554b4b] font-medium">Expiration Date</label>
+                    <div class="select-row flex gap-[15px]">
+                        <select id="month" class="flex-1 h-[50px] px-3 border border-[#e0dada] rounded-[10px] bg-white text-[#777] text-[15px] outline-none cursor-pointer">
+                            <option selected disabled hidden>Month</option>
+                            <option value="01">January</option>
+                            <option value="02">February</option>
+                            <option value="03">March</option>
+                            <option value="04">April</option>
+                            <option value="05">May</option>
+                            <option value="06">June</option>
+                            <option value="07">July</option>
+                            <option value="08">August</option>
+                            <option value="09">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                        <select id="years" class="flex-1 h-[50px] px-3 border border-[#e0dada] rounded-[10px] bg-white text-[#777] text-[15px] outline-none cursor-pointer">
+                            <option selected disabled hidden>Year</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group small mb-5 max-w-[170px]">
+                    <label class="block mb-2 text-sm text-[#554b4b] font-medium">cvv2</label>
+                    <div class="input-box cvv w-full h-[50px] flex items-center justify-between px-4 border border-[#e0dada] rounded-[10px] bg-white text-[#777] transition duration-200 focus-within:border-[#c9899d] focus-within:shadow-[0_0_0_3px_rgba(201,137,157,0.1)]">
+                        <input id="cvv2" class="w-4/5 border-none outline-none text-[15px] bg-transparent placeholder:text-[#b5adad]" type="password" placeholder="•••">
+                        <span class="text-[#aaa]">ⓘ</span>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="removeFocus()" class="submit-btn w-full h-[52px] mt-1 border-none rounded-[10px] bg-[#c9879c] text-white text-base font-semibold cursor-pointer transition duration-250 hover:bg-[#b9768d] hover:-translate-y-0.5">Submit</button>
+
+            <!-- 3D Girl -->
+            <img src="img/1.png" alt="3D girl" class="girl scale-125 absolute flex right-[-100px] bottom-[-35%] w-[802px] z-30 pointer-events-none">
+        </div>
+
+        <!-- Profile Box -->
+        <div class="profile-box absolute top-[60%] left-0 w-[270px] p-[15px] bg-white/85 backdrop-blur-md rounded-[22px] shadow-[0_20px_45px_rgba(80,50,50,0.12)] z-40 text-center [transform:rotate(-5deg)] transition duration-400 ease-in-out hover:[transform:rotate(0deg)_translateY(-8px)]">
+            <img src="img/profile.png" alt="My Photo" class="profile-img w-[65px] h-[65px] rounded-full object-cover border-[3px] border-white outline-[3px] outline-[#c9879c] mb-2.5 mx-auto">
+            <h3 class="text-base m-0 mb-[5px] text-[#554b4b]">Fatemeh Dehghani</h3>
+            <div class="profile-role inline-block py-1 px-3 rounded-[20px] bg-[#f8e8ed] text-[#c9879c] text-[10px] font-bold tracking-wider mb-2.5">Web Developer</div>
+            <p class="profile-bio text-[11px] leading-[1.5] text-[#817777] mb-3">
+                Hi! I'm a passionate developer who loves creating interactive web experiences.
+            </p>
+            <div class="profile-socials flex justify-center gap-[15px]">
+                <a href="https://github.com/FtmDhn" title="GitHub" class="text-[#b5adad] no-underline transition duration-200 flex items-center justify-center hover:text-[#c9879c] hover:-translate-y-1">
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                    </svg>
+                </a>
+                <a href="https://linkedin.com/in/FatemehDehghani" title="LinkedIn" class="text-[#b5adad] no-underline transition duration-200 flex items-center justify-center hover:text-[#c9879c] hover:-translate-y-1">
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                    </svg>
+                </a>
+                <a href="https://instagram.com/ftm.dehgni" title="Twitter" class="text-[#b5adad] no-underline transition duration-200 flex items-center justify-center hover:text-[#c9879c] hover:-translate-y-1">
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                        <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.066 9.645c.183 4.04-2.83 8.544-8.164 8.544-1.622 0-3.131-.476-4.402-1.291 1.524.18 3.045-.244 4.252-1.189-1.256-.023-2.317-.854-2.684-1.995.451.086.895.061 1.298-.049-1.381-.278-2.335-1.522-2.304-2.853.388.215.83.344 1.301.359-1.279-.855-1.641-2.544-.889-3.835 1.416 1.738 3.533 2.881 5.924 3 .419-1.796 2.245-2.838 3.823-2.291.812.281 1.442.892 1.733 1.682.703-.137 1.363-.375 1.977-.711-.233.719-.726 1.322-1.369 1.704.629-.07 1.227-.241 1.783-.484-.418.651-.949 1.219-1.559 1.674z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </main>
+
+</body>
+<script src="js/main.js"></script>
+</html>
